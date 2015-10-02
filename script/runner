@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require 'drb'
+require 'awesome_print'
+require 'terminal-table'
+require 'shell-spinner'
+require 'parallel'
+require 'csv'
+require_relative '../lib/runner_register'
+require_relative '../lib/runner'
+
+
+runner = Runner.new
+
+ShellSpinner "Running '#{runner.original_command_line}' #{runner.times_to_run} times with #{runner.total} samples..." do
+  runner.times_to_run.times do
+    runner.register.reset
+    result = runner.run
+  end
+end

@@ -1,0 +1,18 @@
+initial_silence,greeting,after_greeting_silence,total_analysis_time,min_word_length,between_words_silence,maximum_number_of_words,silence_threshold,total,correct,correct_percent,false_positives,false_negatives,total_amd_time,average_time,execution_time
+2500,1500,800,5000,100,50,3,256,158,142,89.87,7,9,463.2229999999999,2.932,184.846097,ALL --no-csv --no-summary
+1500,1500,800,5000,100,50,3,256,158,126,79.75,24,8,442.90299999999985,2.803,188.708872,ALL --no-csv --no-summary --initial_silence 1500
+5000,1500,800,5000,100,50,3,256,158,145,91.77,4,9,479.04900000000015,3.032,204.081224,ALL --no-csv --no-summary --initial_silence 5000
+2500,750,800,5000,100,50,3,256,158,142,89.87,12,4,463.8160000000001,2.936,199.983975,ALL --no-csv --no-summary --greeting 750
+2500,3000,800,5000,100,50,3,256,158,141,89.24,7,10,504.2979999999999,3.192,219.818543,ALL --no-csv --no-summary --greeting 3000
+2500,1500,400,5000,100,50,3,256,158,142,89.87,5,11,413.4579999999999,2.617,180.452592,ALL --no-csv --no-summary --after_greeting_silence 400
+2500,1500,1600,5000,100,50,3,256,158,137,86.71,15,6,576.4529999999995,3.648,229.675599,ALL --no-csv --no-summary --after_greeting_silence 1600
+2500,1500,800,2500,100,50,3,256,158,136,86.08,2,20,417.24499999999995,2.641,179.458616,ALL --no-csv --no-summary --total_analysis_time 2500
+2500,1500,800,5000,100,50,3,256,158,142,89.87,7,9,475.22099999999995,3.008,199.309431,ALL --no-csv --no-summary --total_analysis_time 5000
+2500,1500,800,5000,50,50,3,256,158,143,90.51,10,5,471.04799999999994,2.981,201.012096,ALL --no-csv --no-summary --min_word_length 50
+2500,1500,800,5000,200,50,3,256,158,133,84.18,11,14,525.657,3.327,211.649924,ALL --no-csv --no-summary --min_word_length 200
+2500,1500,800,5000,100,25,3,256,158,141,89.24,9,8,463.49099999999993,2.933,188.241116,ALL --no-csv --no-summary --between_words_silence 25
+2500,1500,800,5000,100,100,3,256,158,144,91.14,5,9,480.511,3.041,191.426058,ALL --no-csv --no-summary --between_words_silence 100
+2500,1500,800,5000,100,50,1,256,158,37,23.42,121,0,289.46400000000006,1.832,131.289514,ALL --no-csv --no-summary --maximum_number_of_words 1
+2500,1500,800,5000,100,50,5,256,158,140,88.61,3,15,496.6519999999997,3.143,199.040185,ALL --no-csv --no-summary --maximum_number_of_words 5
+2500,1500,800,5000,100,50,3,128,158,143,90.51,10,5,484.9399999999998,3.069,201.912828,ALL --no-csv --no-summary --silence_threshold 128
+2500,1500,800,5000,100,50,3,512,158,133,84.18,9,16,492.083,3.114,204.141043,ALL --no-csv --no-summary --silence_threshold 512

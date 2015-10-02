@@ -1,0 +1,12 @@
+initial_silence,greeting,after_greeting_silence,total_analysis_time,min_word_length,between_words_silence,maximum_number_of_words,silence_threshold,total,correct,correct_percent,false_positives,false_negatives,total_amd_time,average_time,execution_time
+
+2500,1500,800,2500,100,50,3,256,158,137,86.71,2,19,411.2360000000002,2.603,176.410051,ALL --total_analysis_time 2500 --no-csv --no-summary --times_to_run 5
+2500,1500,800,2500,100,50,3,256,158,137,86.71,2,19,415.06800000000004,2.627,181.161454,ALL --total_analysis_time 2500 --no-csv --no-summary --times_to_run 5
+2500,1500,800,2500,100,50,3,256,158,137,86.71,2,19,411.3880000000002,2.604,175.124492,ALL --total_analysis_time 2500 --no-csv --no-summary --times_to_run 5
+2500,1500,800,2500,100,50,3,256,158,137,86.71,2,19,408.6359999999997,2.586,174.822608,ALL --total_analysis_time 2500 --no-csv --no-summary --times_to_run 5
+2500,1500,800,2500,100,50,3,256,158,136,86.08,2,20,411.868,2.607,175.541793,ALL --total_analysis_time 2500 --no-csv --no-summary --times_to_run 5
+2500,1500,800,5000,100,50,3,256,158,142,89.87,7,9,467.6519999999997,2.96,194.162611,ALL --no-csv --no-summary --times_to_run 5
+2500,1500,800,5000,100,50,3,256,158,142,89.87,7,9,474.04900000000015,3.0,195.502156,ALL --no-csv --no-summary --times_to_run 5
+2500,1500,800,5000,100,50,3,256,158,142,89.87,7,9,470.4459999999999,2.978,194.160516,ALL --no-csv --no-summary --times_to_run 5
+2500,1500,800,5000,100,50,3,256,158,142,89.87,7,9,469.92199999999985,2.974,193.326382,ALL --no-csv --no-summary --times_to_run 5
+2500,1500,800,5000,100,50,3,256,158,142,89.87,7,9,471.11900000000014,2.982,193.472588,ALL --no-csv --no-summary --times_to_run 5

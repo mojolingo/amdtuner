@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>AMD Tuning</title>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a class="brand" href="/">AMD Tuning</a>
+        <ul class="nav">
+          
+        </ul>
+      </div>
+    </div>
+    <div class="container" style="padding-top:50px;">
+      <form id="mainform">
+        <div class="row">
+          <div class="span3">
+            <label for="initial_silence">initial_silence</label>
+            <input type="text" id="initial_silence" name="initial_silence" value="2500">
+            <label for="greeting">greeting</label>
+            <input type="text" id="greeting" name="greeting" value="1500">
+          </div>
+          <div class="span3">
+            <label for="after_greeting_silence">after_greeting_silence</label>
+            <input type="text" id="after_greeting_silence" name="after_greeting_silence" value="800">
+            <label for="total_analysis_time">total_analysis_time</label>
+            <input type="text" id="total_analysis_time" name="total_analysis_time" value="5000">
+          </div>
+          <div class="span3">
+            <label for="min_word_length">min_word_length</label>
+            <input type="text" id="min_word_length" name="min_word_length" value="100">
+            <label for="between_words_silence">between_words_silence</label>
+            <input type="text" id="between_words_silence" name="between_words_silence" value="50">
+          </div>
+          <div class="span3">
+            <label for="maximum_number_of_words">maximum_number_of_words</label>
+            <input type="text" id="maximum_number_of_words" name="maximum_number_of_words" value="3">
+            <label for="silence_threshold">silence_threshold</label>
+            <input type="text" id="silence_threshold" name="silence_threshold" value="256">
+          </div>
+        </div>
+        <div class="row">
+          <div class="span3 offset5">
+            <button type="submit" class="btn btn-primary">Run</button>
+            <button type="reset" class="btn">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <div class="span10 offset2">
+        <h3 id="banner"><%= @num_files %> files loaded.</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span12">
+        <table class="table table-condensed">
+          <thead>
+            <th>File</th>
+            <th>Type</th>
+            <th>Result</th>
+            <th>Reason</th>
+            <th>Correct</th>
+            <th>Time</th>
+            <th>Actions</th>
+          </thead>
+          <tbody>
+          <% @list.each_with_index do |i, k| %>
+            <tr id="row_<%= k %>">
+              <td class="iname"><%= i[:name] %></td>
+              <td class="ihuman"><%= i[:human] ? 'Human' : 'Machine' %></td>
+              <td class="iresult"></td>
+              <td class="ireason"></td>
+              <td class="icorrect"></td>
+              <td class="itime"></td>
+              <td class="iaction">
+                <a href="#" class="btn btn-success btn-mini ibtn-run" id="ibtn_<%= k %>">Run</a>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- page content -->
+    <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script>
+    var loaded = <%= @num_files %>;
+    var correct = 0;
+    var false_positives = 0; //this is a HUMAN and we think it is a MACHINE
+    var false_negatives = 0;
+    var total_time = 0;
+    var run_all = false;
+    var current = 0;
+
+    $(function(){
+      $('#mainform').submit(function(e){
+        runAll();
+        e.preventDefault();
+      });
+
+      $('.ibtn-run').click(function(e){
+        id = id_from_string($(this).attr('id'));
+        runOne(id);
+        e.preventDefault();
+      });
+
+      function get_param_list() {
+        return $('#mainform').serialize();
+      }
+
+      function id_from_string(what) {
+        return what.split('_')[1]
+      }
+
+      function runOne(id) {
+        var url = 'http://127.0.0.1:8080/dial/' + id + '?' + get_param_list();
+        $.ajax({
+          dataType: "json",
+          url: url,
+          async: false,
+          success: function(data) {
+            updateOne(id, data);
+          }
+        });
+      }
+
+      function updateBanner() {
+        if (current > 0) {
+          var average = total_time / current;
+          var msg = 'Processed ' + current + '/' + loaded + ' - OK: ' + correct;
+          msg += ' FP: ' + false_positives + ' FN: ' + false_negatives;
+          msg += ' - Avg Time: ' + average.toFixed(3);
+          $('#banner').html(msg);
+        }
+      }
+
+      function runAll() {
+        while (current < loaded) {
+          runOne(current);
+          current++;
+          updateBanner();
+        }
+        resetCounters();
+      }
+
+      function resetCounters() {
+        total = 0;
+        correct = 0;
+        false_positives = 0;
+        false_negatives = 0;
+        total_time = 0;
+        run_all = false;
+        current = 0;
+      }
+
+      function updateOne(id, data) {
+        var row_id = 'row_' + id;
+        var negMessage = 'No';
+        if (data.status == 'fp') {
+          negMessage = 'FP';
+          false_positives += 1;
+        }
+        if (data.status == 'fn') {
+          negMessage = 'FN';
+          false_negatives += 1;
+        }
+        if (data.correct) {
+          correct += 1;
+          $('#' + row_id + ' .icorrect').html('<span class="label label-success">Yes</span>');
+        } else {
+          $('#' + row_id + ' .icorrect').html('<span class="label label-important">' + negMessage + '</span>');
+        }
+        total_time += data.time;
+        $('#' + row_id + ' .iresult').html(data.result);
+        $('#' + row_id + ' .ireason').html(data.reason);
+        $('#' + row_id + ' .itime').html(data.time);
+      }
+    });
+    </script>
+  </body>
+</html>

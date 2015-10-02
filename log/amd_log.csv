@@ -1,0 +1,3 @@
+presilence,initial_silence,greeting,after_greeting_silence,total_analysis_time,min_word_length,between_words_silence,maximum_number_of_words,silence_threshold,total,correct,correct_percent,false_positives,false_negatives,total_amd_time,average_time,execution_time
+true,1500,1500,400,2500,100,50,3,256,158,125,79.11,20,13,380.626,2.409,174.487029,ALL --no-csv --no-summary --initial_silence 1500 --after_greeting_silence 400 --total_analysis_time 2500
+false,1500,1500,400,2500,100,50,3,256,158,123,77.85,19,16,369.63199999999983,2.339,159.575851,ALL --no-csv --no-summary --initial_silence 1500 --after_greeting_silence 400 --total_analysis_time 2500 --no-presilence

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+bundle exec script/runner ALL --no-csv --no-summary --min_word_length 50
+bundle exec script/runner ALL --no-csv --no-summary --min_word_length 200
+bundle exec script/runner ALL --no-csv --no-summary --between_words_silence 25
+bundle exec script/runner ALL --no-csv --no-summary --between_words_silence 100
+bundle exec script/runner ALL --no-csv --no-summary --maximum_number_of_words 1
+bundle exec script/runner ALL --no-csv --no-summary --maximum_number_of_words 5
+bundle exec script/runner ALL --no-csv --no-summary --silence_threshold 128
+bundle exec script/runner ALL --no-csv --no-summary --silence_threshold 512
